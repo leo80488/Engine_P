@@ -2,6 +2,38 @@
 
 # Architecture
 
+## Engine の全体像
+
+DX12Engine は、real-time renderer、scene と gameplay の runtime、editor を組み合わせた engine です。Editor と Game は engine core を共有します。Editor は content を作成する tool を追加し、Game はその content を単独で実行します。
+
+| 構成要素 | 主な役割 |
+| --- | --- |
+| Scene と ECS | world に存在する object を表し、それぞれの data を保持 |
+| Gameplay systems | input、移動、animation、physics、navigation、behavior を更新 |
+| Resources | mesh、texture、material、scene などの asset を読み込み、管理 |
+| Renderer | 現在の world と camera から描画に必要な data を準備 |
+| Render Graph と Graphics | rendering の処理を整理し、Direct3D 12 を通じて GPU に送信 |
+| Editor | 共通の engine を使って scene、asset、settings を作成・確認 |
+| AI Harness | 外部 tool による自動 check と evidence の収集 |
+
+## 各部分の連携
+
+scene は world 内の object を記述します。component は位置、見た目、physics の設定などの data を持ち、system が実行中にその data を更新します。Lua は project 固有の behavior を追加し、resource は object が使う mesh や texture などの content を提供します。
+
+各 frame で、renderer は active camera から見える scene の描画準備を行います。Render Graph が選択された rendering pass と resource の処理を整理し、Graphics が Direct3D 12 の処理を担当します。lighting、material、post processing が最終的な画像を作ります。editor も同じ core system を使って content を preview・編集します。
+
+公開版の starter scene は小さな構成です。engine の起動と基本描画を確認するためのもので、より豊かな gameplay や visual feature には project 側で用意する content と設定が必要です。
+
+## 主な設計方針
+
+- **共通の runtime:** Editor と Game が core system を共有し、作成した content を editor 外でも実行できるようにします。
+- **役割の分離:** world simulation、resource management、GPU rendering にそれぞれ明確な役割を持たせます。
+- **Data-driven な content:** scene、component、material、settings、Lua script で project の多くの動作を記述します。
+- **選択可能な integration:** module で追加機能を選択します。一部には別途 SDK や asset が必要です。
+- **実行状態の把握:** log、frame record、harness check により、実際に何が動いたかを確認できます。
+
+以下では ownership と source 構成を説明します。個別の subsystem は [Engine Systems](ENGINE.ja.md)、visual feature は [Rendering](RENDERING.ja.md)、自動 check は [AI Harness](AI_HARNESS.ja.md) を参照してください。
+
 ## Targets と所有関係
 
 EngineOptions と EngineDependencies は INTERFACE target であり、追加の runtime binary ではありません。標準の選択 module は Nav です。Editor が editor-only UI と import code を所有し、Game は EditorCore を link しません。

@@ -2,6 +2,38 @@
 
 # Architecture
 
+## Engine at a glance
+
+DX12Engine combines a real-time renderer, a scene and gameplay runtime, and an editor. Editor and Game share the engine core: Editor adds tools for creating content, while Game runs that content on its own.
+
+| Part | Main responsibility |
+| --- | --- |
+| Scene and ECS | Describe what exists in the world and keep each object's data |
+| Gameplay systems | Update input, movement, animation, physics, navigation and behavior |
+| Resources | Load and manage meshes, textures, materials, scenes and other assets |
+| Renderer | Turn the current world and camera into the data needed to draw an image |
+| Render Graph and Graphics | Organize rendering work and send it to the GPU through Direct3D 12 |
+| Editor | Create and inspect scenes, assets and settings using the shared engine |
+| AI Harness | Let external tools run checks and collect evidence automatically |
+
+## How the parts work together
+
+A scene describes the objects in the world. Components hold their data, such as position, appearance or physics properties. Systems update that data as the application runs. Lua adds project-specific behavior, while resources provide the meshes, textures and other content those objects use.
+
+For each frame, the renderer prepares the visible scene from the active camera. Render Graph organizes the selected rendering passes and their resources; Graphics handles the Direct3D 12 work. Lighting, materials and post processing contribute to the resulting image. The editor uses the same core systems to preview and edit content.
+
+The public starter scene is deliberately small. It demonstrates engine startup and basic rendering; richer gameplay and visual features need content and configuration supplied by the project.
+
+## Main design principles
+
+- **Shared runtime:** Editor and Game use the same core systems so authored content can run outside the editor.
+- **Clear responsibilities:** World simulation, resource management and GPU rendering have separate roles.
+- **Data-driven content:** Scenes, components, materials, settings and Lua scripts describe much of a project's behavior.
+- **Optional integrations:** Modules allow projects to select additional functionality; some require separate SDKs or assets.
+- **Observable execution:** Logs, frame records and harness checks help explain what actually ran.
+
+The sections below describe ownership and source organization. [Engine Systems](ENGINE.md) introduces individual subsystems, [Rendering](RENDERING.md) covers visual features, and [AI Harness](AI_HARNESS.md) explains automated checks.
+
 ## Targets and ownership
 
 `EngineOptions` and `EngineDependencies` are interface targets, not additional runtime binaries. The default selected module is Nav. Editor owns editor-only UI/import code; Game does not link EditorCore.
