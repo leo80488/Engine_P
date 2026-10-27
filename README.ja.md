@@ -8,7 +8,6 @@ native CMake build に対応する C++20 / Direct3D 12 engine と editor です�
 
 ## Demo
 
-
 本 repository に含まれない project content を使用した過去の demonstration です。
 
 <table>
@@ -74,7 +73,7 @@ CMake は EngineCore、EditorCore、選択した module library、Jolt を sourc
 
 ## Documentation
 
-最初の editor/scene/Game workflow は [Getting Started](docs/GETTING_STARTED.ja.md)、ownership は Architecture、実装詳細は Rendering / Engine Systems から読み進められます。図は Mermaid を使用し、GitHub 上で直接表示できます。
+最初の editor/scene/Game workflow は [Getting Started](docs/GETTING_STARTED.ja.md)、ownership は Architecture、実装詳細は Rendering / Engine Systems から読み進められます。
 
 | Document | 内容 |
 | --- | --- |

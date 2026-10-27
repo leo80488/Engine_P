@@ -2,7 +2,6 @@
 
 # Build
 
-
 ## Prerequisites
 
 - Windows x64, a logged-in desktop and a hardware DX12 GPU suitable for the engine's Shader Model 6.6 path.

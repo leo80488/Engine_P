@@ -2,24 +2,9 @@
 
 # Architecture
 
-
 ## Targets and ownership
 
-```mermaid
-flowchart TD
-    Editor["Editor.exe"] --> EC["EditorCore"]
-    Editor --> Core["EngineCore"]
-    Game["Game.exe"] --> Core
-    Editor --> Modules["Selected EngineModule libraries"]
-    Game --> Modules
-    Core --> Jolt["EngineJolt"]
-    Core --> Deps["EngineDependencies - interface"]
-    Core --> Options["EngineOptions - interface"]
-    EC --> Options
-    Modules --> Options
-```
-
-Arrows show CMake link dependencies. `EngineOptions` and `EngineDependencies` are interface targets, not additional runtime binaries. The default selected module is Nav. Editor owns editor-only UI/import code; Game does not link EditorCore.
+`EngineOptions` and `EngineDependencies` are interface targets, not additional runtime binaries. The default selected module is Nav. Editor owns editor-only UI/import code; Game does not link EditorCore.
 
 EngineCore is compiled without `WITH_EDITOR`. Host differences use host policy or editor hooks. EditorCore compiles editor code with `WITH_EDITOR` and its ImGui definitions.
 
@@ -41,36 +26,11 @@ Render Graph describes passes and resource dependencies. Graphics creates DX12 o
 
 ### Runtime layers
 
-```mermaid
-flowchart TB
-    Hosts["Editor / Game hosts"] --> Pipeline["FramePipeline"]
-    Hosts --> World["World / Scene / ECS"]
-    Scripts["Lua / gameplay / physics / animation"] --> World
-    World --> Prepare["Renderer preparation"]
-    Pipeline --> Prepare
-    Prepare --> Graph["Render Graph"]
-    Graph --> Device["Graphics / DX12 backend"]
-    Resources["ResourceManager / AssetFS"] --> World
-    Resources --> Prepare
-    Hooks["Editor hooks"] -.-> Pipeline
-```
-
-This is a responsibility map. Scene/gameplay state belongs to the world-facing side; pass/resource scheduling belongs to Render Graph; device objects and command submission belong to Graphics. Editor hooks connect authoring work without introducing `WITH_EDITOR` into EngineCore.
+Scene/gameplay state belongs to the world-facing side; pass/resource scheduling belongs to Render Graph; device objects and command submission belong to Graphics. Editor hooks connect authoring work without introducing `WITH_EDITOR` into EngineCore.
 
 ### Frame ownership and synchronization
 
-```mermaid
-flowchart TD
-    Main["Main: window / game phases"] --> Packet["FramePacket / snapshots"]
-    Packet --> Lane["RenderOwner lane"]
-    Lane --> Work["Renderer / Render Graph"]
-    Work --> GPU["DX12 queues / GPU"]
-    Lane -. "drain / timing" .-> Main
-    GPU -. "fence constraints" .-> Slots["Frame / upload slots"]
-    Slots -.-> Main
-```
-
-This illustrates the render-owner path, not an instruction to run every system serially. Jobs and preparation can overlap according to the active frame plan. A drain waits for the required ownership boundary; it does not mean all queued GPU work has completed. Slot reuse is separately guarded by GPU completion.
+The render-owner path separates game-side orchestration from render execution. Jobs and preparation can overlap according to the active frame plan. A drain waits for the required ownership boundary; it does not mean all queued GPU work has completed. Slot reuse is separately guarded by GPU completion.
 
 See [FramePipeline](../DX12/include/Renderer/FramePipeline.h), its [executor](../DX12/src/Renderer/FramePipeline.cpp) and [App render phases](../DX12/src/App_Render.cpp). Keep world mutation, render snapshots and slot ownership on their intended side of the handoff.
 
@@ -126,4 +86,4 @@ See [Engine Systems](ENGINE.md), [Rendering](RENDERING.md) and [Build](BUILD.md)
 | Editor tool | EditorCore ownership, undo/redo, world/preview lifetime and host hooks |
 | Optional module | Descriptor ownership, CMake selection, SDK checks and runtime manifest |
 
-Start with the smallest relevant extension point and verify it in both hosts when shared behavior changes. The diagrams describe current responsibilities, not a requirement to create new managers for every feature.
+Start with the smallest relevant extension point and verify it in both hosts when shared behavior changes. Use existing ownership boundaries rather than creating new managers for every feature.

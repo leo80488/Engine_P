@@ -4,15 +4,6 @@
 
 最初の source build、scene authoring、独立した Game run の手順です。dependency/option は [Build](BUILD.ja.md)、検証範囲は [Status](STATUS.ja.md) を確認してください。
 
-## Workflow
-
-```mermaid
-flowchart LR
-    Build["Configure / build"] --> Editor["Inspect / author in Editor"]
-    Editor --> Game["Register scene / run Game"]
-    Game --> Verify["CTest / install / package"]
-```
-
 ## 1. Build して editor を開く
 
 repository root から実行します。

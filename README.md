@@ -73,7 +73,7 @@ Full instructions, options, installation and packaging: [Build](docs/BUILD.md).
 
 ## Documentation
 
-Start with [Getting Started](docs/GETTING_STARTED.md) for the first editor/scene/Game workflow, then use Architecture for ownership and Rendering/Engine Systems for implementation details. Diagrams use Mermaid and render directly on GitHub.
+Start with [Getting Started](docs/GETTING_STARTED.md) for the first editor/scene/Game workflow, then use Architecture for ownership and Rendering/Engine Systems for implementation details.
 
 | Document | Contents |
 | --- | --- |

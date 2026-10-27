@@ -4,15 +4,6 @@
 
 This walkthrough covers the first source build, scene-authoring workflow and a separate Game run. Use [Build](BUILD.md) for dependencies/options and [Status](STATUS.md) for the tested scope.
 
-## Workflow
-
-```mermaid
-flowchart LR
-    Build["Configure / build"] --> Editor["Inspect / author in Editor"]
-    Editor --> Game["Register scene / run Game"]
-    Game --> Verify["CTest / install / package"]
-```
-
 ## 1. Build and open the editor
 
 From the repository root:

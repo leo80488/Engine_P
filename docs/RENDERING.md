@@ -10,21 +10,7 @@ The starter uses SDR and conservative defaults. The areas below describe retaine
 
 ### Feature-level data flow
 
-```mermaid
-flowchart TD
-    Scene["Views / geometry / materials"] --> Visibility["Visibility / deformation"]
-    Visibility --> GBuffer["G-buffer"]
-    GBuffer --> Lighting["Lighting"]
-    Shadows["Shadow resources"] --> Lighting
-    Indirect["Selected GI / reflections"] -.-> Lighting
-    Lighting --> HDR["HDR composition"]
-    Sky["Sky / clouds / volumetrics"] -.-> HDR
-    HDR --> Post["Selected AA / upscaling / post"]
-    Post --> Output["Tone map / output composition"]
-    UI["UI / editor"] --> Output
-```
-
-This groups feature dependencies rather than prescribing a fixed pass order. Optional inputs are dashed. The active frame plan selects the render path and supported features; Render Graph resolves the concrete pass/resource relationships. AA/upscaling choices and capture/output paths can alter the detailed ordering.
+The active frame plan selects the render path and supported features; Render Graph resolves the concrete pass/resource relationships. AA/upscaling choices and capture/output paths can alter the detailed ordering.
 
 ### Reading the source
 

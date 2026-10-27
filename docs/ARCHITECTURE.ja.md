@@ -4,21 +4,7 @@
 
 ## Targets と所有関係
 
-```mermaid
-flowchart TD
-    Editor["Editor.exe"] --> EC["EditorCore"]
-    Editor --> Core["EngineCore"]
-    Game["Game.exe"] --> Core
-    Editor --> Modules["Selected EngineModule libraries"]
-    Game --> Modules
-    Core --> Jolt["EngineJolt"]
-    Core --> Deps["EngineDependencies - interface"]
-    Core --> Options["EngineOptions - interface"]
-    EC --> Options
-    Modules --> Options
-```
-
-矢印は CMake の link dependency を表します。EngineOptions と EngineDependencies は INTERFACE target であり、追加の runtime binary ではありません。標準の選択 module は Nav です。Editor が editor-only UI と import code を所有し、Game は EditorCore を link しません。
+EngineOptions と EngineDependencies は INTERFACE target であり、追加の runtime binary ではありません。標準の選択 module は Nav です。Editor が editor-only UI と import code を所有し、Game は EditorCore を link しません。
 
 EngineCore は WITH_EDITOR なしで一度コンパイルします。host ごとの差分には host policy または editor hook を使用します。EditorCore は WITH_EDITOR と editor 用 ImGui 定義でコンパイルします。
 
@@ -40,36 +26,11 @@ Render Graph は pass と resource dependency を表し、Graphics が DX12 obje
 
 ### Runtime layers
 
-```mermaid
-flowchart TB
-    Hosts["Editor / Game hosts"] --> Pipeline["FramePipeline"]
-    Hosts --> World["World / Scene / ECS"]
-    Scripts["Lua / gameplay / physics / animation"] --> World
-    World --> Prepare["Renderer preparation"]
-    Pipeline --> Prepare
-    Prepare --> Graph["Render Graph"]
-    Graph --> Device["Graphics / DX12 backend"]
-    Resources["ResourceManager / AssetFS"] --> World
-    Resources --> Prepare
-    Hooks["Editor hooks"] -.-> Pipeline
-```
-
-この図は責任の配置を示します。Scene/gameplay state は world-facing 側、pass/resource scheduling は Render Graph、device object と command submission は Graphics に属します。Editor hook により、EngineCore に WITH_EDITOR を持ち込まず authoring 処理を接続します。
+Scene/gameplay state は world-facing 側、pass/resource scheduling は Render Graph、device object と command submission は Graphics に属します。Editor hook により、EngineCore に WITH_EDITOR を持ち込まず authoring 処理を接続します。
 
 ### Frame ownership と synchronization
 
-```mermaid
-flowchart TD
-    Main["Main: window / game phases"] --> Packet["FramePacket / snapshots"]
-    Packet --> Lane["RenderOwner lane"]
-    Lane --> Work["Renderer / Render Graph"]
-    Work --> GPU["DX12 queues / GPU"]
-    Lane -. "drain / timing" .-> Main
-    GPU -. "fence constraints" .-> Slots["Frame / upload slots"]
-    Slots -.-> Main
-```
-
-render-owner path の概略であり、すべての system を直列実行する指定ではありません。job と preparation は active frame plan に従って overlap できます。drain は必要な ownership boundary を待ちますが、queue に投入済みの全 GPU work の完了を意味しません。slot の再利用は別途 GPU completion で保護します。
+render-owner path は game 側の orchestration と render execution を分離します。job と preparation は active frame plan に従って overlap できます。drain は必要な ownership boundary を待ちますが、queue に投入済みの全 GPU work の完了を意味しません。slot の再利用は別途 GPU completion で保護します。
 
 [FramePipeline](../DX12/include/Renderer/FramePipeline.h)、[executor](../DX12/src/Renderer/FramePipeline.cpp)、[App render phases](../DX12/src/App_Render.cpp)を参照してください。world mutation、render snapshot、slot ownership を handoff の適切な側に置きます。
 
@@ -125,4 +86,4 @@ CMake は link 対象を選択し、project manifest は runtime で有効にす
 | Editor tool | EditorCore ownership、undo/redo、world/preview lifetime、host hook |
 | Optional module | descriptor ownership、CMake selection、SDK check、runtime manifest |
 
-最小限の関連 extension point から始め、共有動作を変えた場合は両 host で確認します。図は現在の責任分担を示しており、機能ごとに新しい manager を作ることを要求していません。
+最小限の関連 extension point から始め、共有動作を変えた場合は両 host で確認します。機能ごとに新しい manager を作るのではなく、既存の ownership boundary を利用します。

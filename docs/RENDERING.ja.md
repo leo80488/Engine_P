@@ -10,21 +10,7 @@ starter は SDR と保守的な defaults を使用します。以下は保持し
 
 ### Feature-level data flow
 
-```mermaid
-flowchart TD
-    Scene["Views / geometry / materials"] --> Visibility["Visibility / deformation"]
-    Visibility --> GBuffer["G-buffer"]
-    GBuffer --> Lighting["Lighting"]
-    Shadows["Shadow resources"] --> Lighting
-    Indirect["Selected GI / reflections"] -.-> Lighting
-    Lighting --> HDR["HDR composition"]
-    Sky["Sky / clouds / volumetrics"] -.-> HDR
-    HDR --> Post["Selected AA / upscaling / post"]
-    Post --> Output["Tone map / output composition"]
-    UI["UI / editor"] --> Output
-```
-
-feature 間の data dependency をまとめた図で、固定の pass order を指定していません。破線は optional input です。active frame plan が render path と対応 feature を選び、Render Graph が具体的な pass/resource 関係を解決します。AA/upscaling、capture/output path により詳細な順序は変わります。
+active frame plan が render path と対応 feature を選び、Render Graph が具体的な pass/resource 関係を解決します。AA/upscaling、capture/output path により詳細な順序は変わります。
 
 ### Source の読み方
 

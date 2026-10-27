@@ -28,17 +28,7 @@ Native formats have versioned headers/metadata and may contain binary payloads. 
 
 ### Resource loading lifecycle
 
-```mermaid
-stateDiagram-v2
-    [*] --> NotLoaded
-    NotLoaded --> Loading: Load
-    Loading --> Ready: Finalize
-    Loading --> Failed: Error
-    Failed --> Loading: Retry
-    Ready --> NotLoaded: Unload
-```
-
-The diagram shows the main load/retry path using `ResourceManager::ResourceState` values; unload during loading/failure also invalidates the handle as described below. A load request returns a handle before readiness. Some resources require deferred GPU finalization; downstream texture/mesh systems can also have their own GPU-readiness state. Check the state needed by the consumer rather than assuming a successful file read makes a draw ready.
+ResourceManager uses `NotLoaded`, `Loading`, `Ready` and `Failed` states. Unload during loading/failure also invalidates the handle as described below. A load request returns a handle before readiness. Some resources require deferred GPU finalization; downstream texture/mesh systems can also have their own GPU-readiness state. Check the state needed by the consumer rather than assuming a successful file read makes a draw ready.
 
 | Reference | Validity / responsibility |
 | --- | --- |

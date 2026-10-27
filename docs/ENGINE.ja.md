@@ -28,17 +28,7 @@ native format は versioned header/metadata を持ち、binary payload を含む
 
 ### Resource loading lifecycle
 
-```mermaid
-stateDiagram-v2
-    [*] --> NotLoaded
-    NotLoaded --> Loading: Load
-    Loading --> Ready: Finalize
-    Loading --> Failed: Error
-    Failed --> Loading: Retry
-    Ready --> NotLoaded: Unload
-```
-
-ResourceManager::ResourceState を用いて主な load/retry 経路を示します。loading/failure 中の unload でも、下記のように handle を無効化します。load request は ready 前に handle を返します。一部は deferred GPU finalization を必要とし、texture/mesh subsystem に追加の GPU-readiness state がある場合もあります。file read の成功だけで draw 可能と判断せず、利用側が必要とする状態を確認してください。
+ResourceManager は NotLoaded、Loading、Ready、Failed の状態を使用します。loading/failure 中の unload でも、下記のように handle を無効化します。load request は ready 前に handle を返します。一部は deferred GPU finalization を必要とし、texture/mesh subsystem に追加の GPU-readiness state がある場合もあります。file read の成功だけで draw 可能と判断せず、利用側が必要とする状態を確認してください。
 
 | Reference | 有効範囲と責任 |
 | --- | --- |
