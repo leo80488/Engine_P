@@ -81,6 +81,7 @@ CMake は EngineCore、EditorCore、選択した module library、Jolt を sourc
 | [Architecture](docs/ARCHITECTURE.ja.md) | target、ownership、frame execution、resource boundary |
 | [Rendering](docs/RENDERING.ja.md) | pipeline、lighting、material、effect、pass source index |
 | [Engine Systems](docs/ENGINE.ja.md) | ECS、resource、animation、physics、scripting、UI、editor |
+| [AI Harness](docs/AI_HARNESS.ja.md) | bounded run、Lua scenario、evidence、障害調査、local control |
 | [Build](docs/BUILD.ja.md) | CMake、dependency、test、install、troubleshooting |
 | [Credits & References](docs/CREDITS.ja.md) | library、font、implementation reference |
 | [Status & Limitations](docs/STATUS.ja.md) | distribution と verification の範囲 |

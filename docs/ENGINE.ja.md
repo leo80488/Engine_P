@@ -127,6 +127,8 @@ docking editor は Outliner、Inspector、Content Browser、viewport tool、undo
 
 ## Diagnostics と extension
 
+実行例、Lua scenario の作成、evidence の合否判定、local control の連携は [AI Harness](AI_HARNESS.ja.md) を参照してください。
+
 bounded run は ledger、per-frame evidence、log、任意の capture/state を出力します。CTest は exit code に加えてこれらを確認します。local control channel は runtime で opt-in し engine binding を評価するため sandbox ではありません。status 応答だけで frame 進行を判断しないでください。
 
 拡張時は ownership、reflection/serialization、CPU/GPU layout、lifetime の契約を合わせます。新しい動作には独立した fixture を追加します。starter startup test はゲーム全体を検証するものではありません。

@@ -100,6 +100,8 @@ starter は camera、directional light、cube を持ちます。F11 で full vie
 
 ## Test
 
+実行例、Lua scenario の作成、evidence の合否判定、local control の連携は [AI Harness](AI_HARNESS.ja.md) を参照してください。
+
 ```powershell
 ctest --preset vs-x64-release
 ```

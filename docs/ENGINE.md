@@ -127,6 +127,8 @@ Asynchronous authoring operations may return a job before the result is visible.
 
 ## Diagnostics and extension
 
+See [AI Harness](AI_HARNESS.md) for runnable examples, Lua scenario authoring, evidence acceptance and local control integration.
+
 Bounded runs write a ledger, per-frame evidence, log and optional captures/state. CTest checks these records as well as exit codes. The local control channel is opt-in at runtime, evaluates engine bindings and is not a sandbox. A responding status endpoint alone does not prove frame progression.
 
 Maintain ownership, reflection/serialization, CPU/GPU layouts and lifetime contracts when extending a system. Add independent fixtures for new behavior; the starter startup tests do not exercise a complete game.

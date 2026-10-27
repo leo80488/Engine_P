@@ -81,6 +81,7 @@ Start with [Getting Started](docs/GETTING_STARTED.md) for the first editor/scene
 | [Architecture](docs/ARCHITECTURE.md) | Targets, ownership, frame execution and resource boundaries |
 | [Rendering](docs/RENDERING.md) | Pipeline, lighting, materials, effects and pass source index |
 | [Engine Systems](docs/ENGINE.md) | ECS, resources, animation, physics, scripting, UI and editor |
+| [AI Harness](docs/AI_HARNESS.md) | Bounded runs, Lua scenarios, evidence, failure triage and local control |
 | [Build](docs/BUILD.md) | CMake, dependencies, tests, installation and troubleshooting |
 | [Credits & References](docs/CREDITS.md) | Libraries, fonts and implementation references |
 | [Status & Limitations](docs/STATUS.md) | Distribution scope and verification limits |

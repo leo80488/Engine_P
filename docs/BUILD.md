@@ -100,6 +100,8 @@ The starter has a camera, directional light and cube. F11 switches full viewport
 
 ## Test
 
+See [AI Harness](AI_HARNESS.md) for runnable examples, Lua scenario authoring, evidence acceptance and local control integration.
+
 ```powershell
 ctest --preset vs-x64-release
 ```
