@@ -8,16 +8,15 @@ This source distribution contains the current engine implementation and a small 
 
 ## Demo
 
-Earlier demonstrations, using project content that is not included here:
+Engine demonstrations using project content that is not included here:
 
 <table>
 <tr>
-<td><a href="https://youtu.be/6CPXLe-J1sw"><img width="400" src="https://img.youtube.com/vi/6CPXLe-J1sw/hqdefault.jpg" alt="DX12Engine rendering demo"></a></td>
-<td><a href="https://youtu.be/mi7Asi6O87Y"><img width="400" src="https://img.youtube.com/vi/mi7Asi6O87Y/hqdefault.jpg" alt="DX12Engine editor demo"></a></td>
+<td><a href="https://youtu.be/YSyz0o01oUc"><img width="400" src="https://img.youtube.com/vi/YSyz0o01oUc/hqdefault.jpg" alt="DX12Engine demo 1"></a></td>
+<td><a href="https://youtu.be/ibuUFTuoo0c"><img width="400" src="https://img.youtube.com/vi/ibuUFTuoo0c/hqdefault.jpg" alt="DX12Engine demo 2"></a></td>
 </tr>
 <tr>
-<td><a href="https://youtu.be/0zyT00WBlOE"><img width="400" src="https://img.youtube.com/vi/0zyT00WBlOE/hqdefault.jpg" alt="DX12Engine scene demo"></a></td>
-<td><a href="https://youtu.be/juu7YkzafQs"><img width="400" src="https://img.youtube.com/vi/juu7YkzafQs/hqdefault.jpg" alt="DX12Engine character demo"></a></td>
+<td colspan="2" align="center"><a href="https://youtu.be/ffzg9DcKWXA"><img width="400" src="https://img.youtube.com/vi/ffzg9DcKWXA/hqdefault.jpg" alt="DX12Engine demo 3"></a></td>
 </tr>
 </table>
 
