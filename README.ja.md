@@ -31,7 +31,7 @@ native CMake build に対応する C++20 / Direct3D 12 engine と editor です�
 - ReSTIR implementation、NPR character rendering、outline、decal、custom material shader。
 - Atmosphere、cloud、volumetric effect、terrain、grass、water、interactive ripple。
 - TAA、FXAA、FidelityFX upscaling、HDR、post-processing stack。
-- Streamline は optional integration。SDK/runtime は別途取得します。
+- NVIDIA DLSS Super Resolution、Ray Reconstruction、Frame Generation、NVIDIA Reflex を optional Streamline integration で提供。標準では無効で、SDK/runtime は別途取得します。
 
 **Engine**
 

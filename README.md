@@ -31,7 +31,7 @@ Earlier demonstrations, using project content that is not included here:
 - ReSTIR implementations, NPR character rendering, outlines, decals and custom material shaders.
 - Atmosphere, clouds, volumetric effects, terrain, grass, water and interactive ripples.
 - TAA, FXAA, FidelityFX upscaling, HDR and a post-processing stack.
-- Optional Streamline integration; its SDK/runtime is acquired separately.
+- NVIDIA DLSS Super Resolution, Ray Reconstruction and Frame Generation, plus NVIDIA Reflex, through optional Streamline integration. Disabled by default; SDK/runtime acquired separately.
 
 **Engine**
 

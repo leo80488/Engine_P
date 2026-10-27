@@ -42,7 +42,9 @@ sun direction/intensity、exposure、environment illumination は相互に影響
 
 ## Anti-aliasing と reconstruction
 
-TAA/FXAA source を収録しています。core FidelityFX loader/upscaler payload を含み、Streamline は別途 SDK/runtime が必要な optional integration です。
+TAA/FXAA source と core FidelityFX loader/upscaler payload を収録しています。NVIDIA Streamline integration には、upscaling 用の DLSS Super Resolution、ray-traced image を再構成する Ray Reconstruction、frame を生成する Frame Generation、latency を低減する NVIDIA Reflex が含まれます。
+
+公開版の標準 build では Streamline は無効です。SDK/runtime は別途取得する必要があり、利用可否は選択した feature、GPU、driver によって異なります。これらの integration は標準 startup verification の対象外です。
 
 temporal path は motion vector、history validity、exposure、resolution に依存します。view lifetime change や mode switch では、関連 history の再初期化が必要です。
 

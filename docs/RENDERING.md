@@ -42,7 +42,9 @@ Sun direction/intensity, exposure and environment illumination interact. Adjust 
 
 ## Anti-aliasing and reconstruction
 
-TAA/FXAA source is included. The core FidelityFX loader/upscaler payload is bundled; Streamline is an optional integration requiring its separately acquired SDK/runtime.
+TAA/FXAA source is included. The core FidelityFX loader/upscaler payload is bundled. NVIDIA Streamline integration includes DLSS Super Resolution for upscaling, Ray Reconstruction for ray-traced image reconstruction, Frame Generation for generated frames, and NVIDIA Reflex for latency reduction.
+
+Streamline is disabled in the default public build. Its SDK/runtime must be acquired separately, and availability depends on the selected feature, GPU and driver. These integrations are outside the default startup verification scope.
 
 Temporal paths depend on motion vectors, history validity, exposure and resolution. View lifetime changes and mode switches must reinitialize the appropriate histories.
 
