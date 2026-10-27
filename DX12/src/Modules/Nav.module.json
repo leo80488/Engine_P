@@ -1,0 +1,21 @@
+{
+  "name": "Nav",
+  "kind": "cpp",
+  "summary": "Navigation: Recast / Detour navmeshes (.inav), NavAgent path following, Nav.* in Lua, the bake tool",
+  "dependsOn": [],
+  "enabledByDefault": true,
+  "engineClass": "NavModule",
+  "editorClass": "NavEditorModule",
+  "lib": "Nav",
+  "includeDirs": ["external/recastnavigation/Recast/Include", "external/recastnavigation/Detour/Include"],
+  "sources": [
+    "src/Nav/**",
+    "include/Nav/NavMeshSystem.h",
+    "include/Nav/NavAgentSystem.h",
+    "include/Nav/LuaNavBindings.h",
+    "src/Editor/NavEditorModule.cpp"
+  ],
+  "components": ["NavAgent"],
+  "assetExts": [".inav"],
+  "luaTables": ["Nav"]
+}

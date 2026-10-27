@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  App.manifest - merged into Game.exe and Editor.exe by the linker
+  (Engine.App.props, <Manifest><AdditionalManifestFiles>).
+  Platform_Window_Refactor_Plan.md section 11, B2.
+
+  dpiAwareness PerMonitorV2: the process is DPI-aware per monitor BEFORE any
+    window exists, including the non-client frame and dialogs. It replaces
+    the SetProcessDpiAwareness(PER_MONITOR) call the Window constructor made
+    (V1: the frame did not scale and WM_DPICHANGED was never handled).
+    dpiAware true/pm is the pre-1607 fallback.
+  activeCodePage UTF-8 (decision D-2): the ANSI ("A") Win32 functions and the
+    CRT's narrow file functions read and write UTF-8, the encoding every
+    std::string in this codebase already carries (sources compile with
+    /utf-8). MessageBoxA(e.what()), ShellExecuteA(path), fopen(utf8) were
+    each wrong for any non-ASCII text under a legacy code page.
+  supportedOS Windows 10 / 11: the compatibility context the DPI and code
+    page settings are defined for.
+  Common Controls 6: themed MessageBox / TaskDialog instead of the Windows 95
+    look.
+-->
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
+    </application>
+  </compatibility>
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/pm</dpiAware>
+      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2</dpiAwareness>
+      <activeCodePage xmlns="http://schemas.microsoft.com/SMI/2019/WindowsSettings">UTF-8</activeCodePage>
+    </windowsSettings>
+  </application>
+  <dependency>
+    <dependentAssembly>
+      <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0"
+                        processorArchitecture="*" publicKeyToken="6595b64144ccf1df" language="*"/>
+    </dependentAssembly>
+  </dependency>
+</assembly>

@@ -1,0 +1,21 @@
+* text=auto eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.lua text eol=lf
+*.json text eol=lf
+*.hlsl text eol=lf
+*.hlsli text eol=lf
+*.dll binary
+*.lib binary
+*.ttf binary
+*.otf binary
+*.itex binary
+*.iscene binary
+*.iscn binary
+*.meshlib binary
+*.imat binary
+
+# Preserve exact bytes for manifest-pinned SDK headers.
+"DX12/external/NRD/Include/NRD.h" -text
+"DX12/external/NRD/Include/NRDDescs.h" -text
+"DX12/external/NRD/Include/NRDSettings.h" -text

@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "_comment": "The untracked third-party payload a build or a shipped exe reads (tools/fetch_deps.py; ENGINE_REVIEW_2026-10-25 F1 / N1). Git holds these dependencies' headers and not their libraries, DLLs or prebuilt trees. 'include' / 'optionalInclude' are glob patterns under 'root' (relative to DX12/external); 'files' / 'optionalFiles' are what they matched when the manifest was written (python tools/fetch_deps.py --write-manifest --from <checkout>): size and sha256 of each. A file in 'files' must exist and match; one in 'optionalFiles' is checked when present. 'source.url' is where a fresh clone downloads the dep from - empty until decision D-3 (where the payload is hosted) is made; until then 'python tools/fetch_deps.py --from <a checkout that has them>' copies from one. RTXDI and SHARC are vendored from archives git tracks (vendor_rtxdi.py, vendor_sharc.py) and ONNX Runtime from a pinned download (vendor_onnxruntime.py): not listed here.",
+  "deps": [
+    {
+      "name": "NRD",
+      "version": "4.17.4",
+      "required": true,
+      "scope": [
+        "build",
+        "ship"
+      ],
+      "purpose": "NVIDIA Real-time Denoisers: NrdDenoiser.h includes its headers and every configuration links NRD.lib and ShaderMakeBlob.lib; its shaders are inside the library, so the shipped exe reads nothing else (NRD.h NRD_VERSION 4.17.4, 2 May 2026)",
+      "root": "NRD",
+      "include": [
+        "Include/*.h",
+        "_Bin/Debug/NRD.lib",
+        "_Bin/Release/NRD.lib",
+        "_Build/_deps/shadermake-build/Debug/ShaderMakeBlob.lib",
+        "_Build/_deps/shadermake-build/Release/ShaderMakeBlob.lib"
+      ],
+      "optionalInclude": [
+        "_Bin/*/NRD.pdb",
+        "_Build/_deps/shadermake-build/Debug/ShaderMakeBlob.pdb"
+      ],
+      "source": {
+        "kind": "zip",
+        "url": "",
+        "sha256": "",
+        "stripPrefix": "",
+        "note": "built from github.com/NVIDIAGameWorks/RayTracingDenoiser v4.17.4 with its 1-Deploy / 2-Build scripts (Debug and Release), then the Include folder and the two libraries of each configuration"
+      },
+      "files": {
+        "Include/NRD.h": {
+          "sha256": "231737588d530cff19cda86abc0cb2f1feb054c7b39f490d4f20eaec760e53ab",
+          "bytes": 2730
+        },
+        "Include/NRDDescs.h": {
+          "sha256": "f3594a82241cb0a9c03479906dbed2d81421c6a19ce64ba204ed1d2cd285badd",
+          "bytes": 19439
+        },
+        "Include/NRDSettings.h": {
+          "sha256": "a2a07e6012329f8994648a186db706b29e39214051cb7cdeb55b75e715b6674b",
+          "bytes": 26332
+        },
+        "_Bin/Debug/NRD.lib": {
+          "sha256": "2633b9b503a0db4c35f69b9892803ebd83e60ccf9cc9df209c45e935e3e9c0cb",
+          "bytes": 6019410
+        },
+        "_Bin/Release/NRD.lib": {
+          "sha256": "dd74ce87789045acd07bd6cb4bdbd17b999f89005aba55853e59c8fd1bf9af12",
+          "bytes": 5198210
+        },
+        "_Build/_deps/shadermake-build/Debug/ShaderMakeBlob.lib": {
+          "sha256": "57e023a18111a74ef00b4683c6b1a023ebb9cce21ad074acd5c1d422d1bc2297",
+          "bytes": 776606
+        },
+        "_Build/_deps/shadermake-build/Release/ShaderMakeBlob.lib": {
+          "sha256": "c15a8cac67c9b50def45fdea9e368bb097a1d83b652e3f553396da2038b6fec7",
+          "bytes": 336376
+        }
+      },
+      "optionalFiles": {
+        "_Bin/Debug/NRD.pdb": {
+          "sha256": "11247cfa334215f9393b69f765f4ba87183d2f6ea065a635a7a8c24c79d9e1bf",
+          "bytes": 2035712
+        },
+        "_Bin/Release/NRD.pdb": {
+          "sha256": "28579fe1d933a3ddbe8856b6ab6a8516db151024b696ab2a365c2b5fa9913e0b",
+          "bytes": 1994752
+        },
+        "_Build/_deps/shadermake-build/Debug/ShaderMakeBlob.pdb": {
+          "sha256": "b31ad615b95300d4d2e4ff723190b5aa06d3c15f25e958f905951d51d94ce936",
+          "bytes": 503808
+        }
+      }
+    },
+    {
+      "name": "meshoptimizer",
+      "version": "1.1",
+      "required": true,
+      "scope": [
+        "build",
+        "ship"
+      ],
+      "purpose": "mesh optimisation and meshlet building: EngineCore pulls meshoptimizer_debug.lib / meshoptimizer_release.lib in with a #pragma comment (meshoptimizer.h MESHOPTIMIZER_VERSION 1010)",
+      "root": "meshoptimizer",
+      "include": [
+        "Debug/meshoptimizer_debug.lib",
+        "Release/meshoptimizer_release.lib"
+      ],
+      "optionalInclude": [],
+      "source": {
+        "kind": "zip",
+        "url": "",
+        "sha256": "",
+        "stripPrefix": "",
+        "note": "github.com/zeux/meshoptimizer v1.1, built Debug and Release"
+      },
+      "files": {
+        "Debug/meshoptimizer_debug.lib": {
+          "sha256": "beeaadeaf392f223fa29400e506c0f722db0ee41cfaa0eb524b3fbf2db580d70",
+          "bytes": 1136932
+        },
+        "Release/meshoptimizer_release.lib": {
+          "sha256": "76eddee4a0a807f1e7eb97761460c9caa4d62f63d41194a431f702417935a604",
+          "bytes": 556384
+        }
+      },
+      "optionalFiles": {}
+    },
+    {
+      "name": "recastnavigation",
+      "version": "unrecorded",
+      "required": true,
+      "scope": [
+        "build",
+        "ship"
+      ],
+      "purpose": "the Nav module's Recast / Detour / DetourCrowd / DetourTileCache libraries (NavMeshSystem.cpp's #pragma comment lib); no header or binary of them records a version",
+      "root": "recastnavigation",
+      "include": [
+        "Recast/Debug/*.lib",
+        "Recast/Release/*.lib",
+        "Detour/Debug/*.lib",
+        "Detour/Release/*.lib",
+        "DetourCrowd/Debug/*.lib",
+        "DetourCrowd/Release/*.lib",
+        "DetourTileCache/Debug/*.lib",
+        "DetourTileCache/Release/*.lib"
+      ],
+      "optionalInclude": [],
+      "source": {
+        "kind": "zip",
+        "url": "",
+        "sha256": "",
+        "stripPrefix": "",
+        "note": "github.com/recastnavigation/recastnavigation; the version is not recorded anywhere in the tree - fill it in when the source is chosen"
+      },
+      "files": {
+        "Detour/Debug/Detour-d.lib": {
+          "sha256": "1fd75c69e37ecc4b013b691cff67c136ea36073eaa4ff76c6e0dc128140ecdd9",
+          "bytes": 562684
+        },
+        "Detour/Release/Detour.lib": {
+          "sha256": "58b2ba467384ca2ef4e3fc1d3810b2b710fe0433a51efa8a7059c34b7c410e8b",
+          "bytes": 263812
+        },
+        "DetourCrowd/Debug/DetourCrowd-d.lib": {
+          "sha256": "060c36771afb121d396bb8d00c1e669f5e69041d4ac3a7c0eb34c8ee8a062d2b",
+          "bytes": 330062
+        },
+        "DetourCrowd/Release/DetourCrowd.lib": {
+          "sha256": "23f47c880ab6dc61dd6376cf5db06550b120f7233c0fc82337b3316a52347ff3",
+          "bytes": 150312
+        },
+        "DetourTileCache/Debug/DetourTileCache-d.lib": {
+          "sha256": "8d6cb0c3758bc3d8c9f5fda5fcc8bed45b8be7f8901251ff52d51e6af7e8784a",
+          "bytes": 251226
+        },
+        "DetourTileCache/Release/DetourTileCache.lib": {
+          "sha256": "78fb88ee38c216a2e5ceff1d5a201b0d316777a017fde61fc0d5983640905a33",
+          "bytes": 120228
+        },
+        "Recast/Debug/Recast-d.lib": {
+          "sha256": "10e6a3c9fdb79acc4b1424cafb68f7d2aa833284f3d54ac4fdeeaf48b9a86716",
+          "bytes": 861678
+        },
+        "Recast/Release/Recast.lib": {
+          "sha256": "77957ed164d1cbc05e7a6cb8a30a47113b2070aecc8155572687b6e48461366e",
+          "bytes": 451488
+        }
+      },
+      "optionalFiles": {}
+    },
+    {
+      "name": "assimp",
+      "version": "6.0.2",
+      "required": true,
+      "scope": [
+        "build",
+        "editor"
+      ],
+      "purpose": "the Editor's model importers (EditorCore, AnimationImporter.cpp); Game.exe links none of it. The DLLs the editor loads (assimp-vc143-mt.dll, -mtd.dll) are tracked at DX12/; the version is the build folder's name in the maintainer's notes, the DLL carries no version resource",
+      "root": "assimp",
+      "include": [
+        "lib/Debug/assimp-vc143-mtd.lib",
+        "lib/Release/assimp-vc143-mt.lib"
+      ],
+      "optionalInclude": [
+        "bin/Debug/assimp-vc143-mtd.dll",
+        "bin/Debug/assimp-vc143-mtd.pdb",
+        "bin/Release/assimp-vc143-mt.dll",
+        "bin/Release/assimp-vc143-mt.pdb"
+      ],
+      "source": {
+        "kind": "zip",
+        "url": "",
+        "sha256": "",
+        "stripPrefix": "",
+        "note": "assimp 6.0.2 built with CMake for VS 2022 (Debug and Release); tools/animation_import_batch.py copies bin/Release/assimp-vc143-mt.dll"
+      },
+      "files": {
+        "lib/Debug/assimp-vc143-mtd.lib": {
+          "sha256": "cdfcaea82031e1a8882450db22baf0c753c8c189d9750239ed9f7f03eaa798cf",
+          "bytes": 593294
+        },
+        "lib/Release/assimp-vc143-mt.lib": {
+          "sha256": "3512932940df0b69374b0d65844eff8db1f3ba8a494b04c3052ae10788e87a5c",
+          "bytes": 591828
+        }
+      },
+      "optionalFiles": {
+        "bin/Debug/assimp-vc143-mtd.dll": {
+          "sha256": "da4391a74fcbb8fc4cb0eebd27cebd0e7d37c5149eae562bf83305f2f0823054",
+          "bytes": 20135424
+        },
+        "bin/Debug/assimp-vc143-mtd.pdb": {
+          "sha256": "b11ab58ffd2c4ddccc644243c27588978cc9346f0a8a461ee703febe62b154f1",
+          "bytes": 92336128
+        },
+        "bin/Release/assimp-vc143-mt.dll": {
+          "sha256": "224157007bfd0733a675090593023c9ad691681da0a5eec24d4c5024e8ce2af4",
+          "bytes": 5733376
+        },
+        "bin/Release/assimp-vc143-mt.pdb": {
+          "sha256": "c499baf26b41cfb66f12f6c1178aaeb80a7c4d73dd4538234231f123dfa7f991",
+          "bytes": 58454016
+        }
+      }
+    },
+    {
+      "name": "dxc",
+      "version": "1.8.2502.11",
+      "required": true,
+      "scope": [
+        "build",
+        "ship"
+      ],
+      "purpose": "dxcompiler.dll / dxil.dll: the engine loads them to compile and reflect shaders, and the shipped package's cook compiles with the very same dxcompiler.dll, so the bytes of every shipped shader depend on it (the headers and dxcompiler.lib are tracked; taken from Windows SDK 10.0.26100)",
+      "root": "dxc",
+      "include": [
+        "bin/dxcompiler.dll",
+        "bin/dxil.dll"
+      ],
+      "optionalInclude": [],
+      "source": {
+        "kind": "zip",
+        "url": "",
+        "sha256": "",
+        "stripPrefix": "",
+        "note": "the two DLLs of Windows SDK 10.0.26100 (Windows Kits\\10\\Redist\\D3D\\x64) or of the DirectXShaderCompiler release 1.8.2502"
+      },
+      "files": {
+        "bin/dxcompiler.dll": {
+          "sha256": "ee728c3ee6b88c284dc98c29eaf4d078173e67c6b601b8603aa95003d6a154e7",
+          "bytes": 14316960
+        },
+        "bin/dxil.dll": {
+          "sha256": "179ab53c75008d91d71bee43fd3ca697d5b5a9f08795146818e6dab62ac86394",
+          "bytes": 1509744
+        }
+      },
+      "optionalFiles": {}
+    }
+  ]
+}

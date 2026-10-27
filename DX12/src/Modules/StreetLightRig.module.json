@@ -1,0 +1,8 @@
+{
+  "name": "StreetLightRig",
+  "kind": "script",
+  "summary": "A batch rig: every street lamp in the world gets a time-of-day spot light (Tokyo's 170 lamps)",
+  "enabledByDefault": false,
+  "scripts": ["asset/scripts/systems/StreetLightRig.lua"],
+  "scriptNames": ["StreetLightRig"]
+}

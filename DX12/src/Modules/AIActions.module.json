@@ -1,0 +1,13 @@
+{
+  "name": "AIActions",
+  "kind": "script",
+  "summary": "The stock behaviour-tree action library (asset/ai: move, patrol, chase, the enemy and bench actions) and the AIBench scene script; they query the navmesh",
+  "dependsOn": ["Nav"],
+  "enabledByDefault": true,
+  "scripts": [
+    "asset/ai/actions.lua",
+    "asset/ai/enemy_actions.lua",
+    "asset/ai/bench_actions.lua",
+    "asset/scripts/scenes/AIBench.lua"
+  ]
+}

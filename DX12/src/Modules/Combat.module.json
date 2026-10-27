@@ -1,0 +1,8 @@
+{
+  "name": "Combat",
+  "kind": "script",
+  "summary": "Demo combat feel: the Damage service (element multipliers) and HitStop (a scene-scoped System: a short time freeze on each landed hit)",
+  "enabledByDefault": true,
+  "scripts": ["asset/scripts/services/Damage.lua", "asset/scripts/systems/HitStop.lua"],
+  "scriptNames": ["Damage", "HitStop"]
+}

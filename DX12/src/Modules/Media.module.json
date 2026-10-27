@@ -1,0 +1,18 @@
+{
+  "name": "Media",
+  "kind": "cpp",
+  "summary": "FFmpeg decoding on the CPU: video files as NV12 frames (the face tracker's video sources)",
+  "dependsOn": [],
+  "enabledByDefault": true,
+  "engineClass": "MediaModule",
+  "lib": "Media",
+  "defines": ["WITH_FFMPEG"],
+  "includeDirs": ["external/ffmpeg/include"],
+  "sources": [
+    "src/Media/**",
+    "include/Media/**"
+  ],
+  "importedDlls": ["avformat-62.dll", "avcodec-62.dll", "avutil-60.dll", "swscale-9.dll"],
+  "runtimeDlls": ["swresample-6.dll"],
+  "dllDirs": ["."]
+}

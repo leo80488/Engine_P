@@ -1,0 +1,79 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 24,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "vs-x64",
+      "displayName": "Visual Studio 2022 x64",
+      "generator": "Visual Studio 17 2022",
+      "architecture": {
+        "value": "x64",
+        "strategy": "set"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "set"
+      },
+      "binaryDir": "${sourceDir}/DX12/build/ci/cmake/vs-x64"
+    },
+    {
+      "name": "ninja-release",
+      "displayName": "Ninja Release (x64 developer shell)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/DX12/build/ci/cmake/ninja-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ninja-debug",
+      "displayName": "Ninja Debug (x64 developer shell)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/DX12/build/ci/cmake/ninja-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "vs-x64-release",
+      "configurePreset": "vs-x64",
+      "configuration": "Release",
+      "jobs": 12
+    },
+    {
+      "name": "vs-x64-debug",
+      "configurePreset": "vs-x64",
+      "configuration": "Debug",
+      "jobs": 12
+    },
+    {
+      "name": "ninja-release",
+      "configurePreset": "ninja-release",
+      "jobs": 12
+    },
+    {
+      "name": "ninja-debug",
+      "configurePreset": "ninja-debug",
+      "jobs": 12
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "vs-x64-release",
+      "configurePreset": "vs-x64",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 1
+      }
+    }
+  ]
+}

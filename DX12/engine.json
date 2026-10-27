@@ -1,0 +1,42 @@
+{
+  "_comment": "Engine/developer configuration. NOT player options — those live in settings.json. Sealed into game.ipak by tools/package_game.py; the shipped runtime reads it and never writes it. Edit via the editor's Graphics Settings -> Developer node, or by hand.",
+  "culling": {
+    "animCulling": true,
+    "gpuCompaction": true,
+    "gpuCulling": true,
+    "hiZOcclusion": true,
+    "indirectDraw": true,
+    "meshShading": true,
+    "meshletLodError": 1.0,
+    "meshletShadowLodError": 1.0
+  },
+  "materialSurfaceCache": {
+    "enabled": true,
+    "pagesPerFrame": 8
+  },
+  "perf": {
+    "depthPrepass": false,
+    "perObjectShadow": true
+  },
+  "raytracing": {
+    "budgetGuard": false,
+    "budgetMs": 4.0,
+    "restirBudgetMs": 0.0,
+    "diRayTMax": 150.0,
+    "restirDiSpatialPasses": 1,
+    "restirDiSpatialRadiusPx": 16,
+    "restirDiK": 3,
+    "restirDiMCap": 20,
+    "restirDiAgeCap": 63,
+    "restirGiAgeCap": 30,
+    "restirDiReuse": true,
+    "restirGiReuse": true,
+    "restirGiSpatialRadiusPx": 8,
+    "restirGiMaxDistance": 150.0,
+    "restirGiTier": 1,
+    "reflectionsMaxRoughness": 0.550000011920929,
+    "reflectionsUseNRD": true,
+    "shadowBlendOccluders": true
+  },
+  "version": 1
+}

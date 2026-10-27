@@ -1,0 +1,110 @@
+STANDALONE ENGINE EDITION
+This distribution disables optional NVIDIA SDK, ONNX and FFmpeg features by default and excludes their payloads. The list below also describes those optional integrations. The runtime default font path FGMiraiRen.ttf contains Noto Sans Regular; its OFL license is beside it.
+
+THIRD-PARTY NOTICES
+===================
+
+This application incorporates the third-party components listed below.
+Each component is the property of its respective authors and is used under
+the license named next to it. Full license texts are available at the
+upstream URLs and, where the component ships one, under DX12/external/<name>/.
+
+This file is shipped with every packaged build (CMake installation copies
+it beside the executable).
+
+Component            License                        Upstream
+---------            -------                        --------
+Jolt Physics         MIT                            github.com/jrouwe/JoltPhysics
+Lua                  MIT                            lua.org
+sol2                 MIT                            github.com/ThePhD/sol2
+Dear ImGui           MIT                            github.com/ocornut/imgui
+ImGuizmo             MIT                            github.com/CedricGuillemet/ImGuizmo
+FreeType             FreeType License (FTL)         freetype.org
+                     (BSD-style, requires credit:
+                     "Portions of this software are
+                     copyright (c) The FreeType
+                     Project (www.freetype.org).
+                     All rights reserved.")
+DirectXTex           MIT                            github.com/microsoft/DirectXTex
+Assimp               BSD-3-Clause (modified)        github.com/assimp/assimp
+meshoptimizer        MIT                            github.com/zeux/meshoptimizer
+recastnavigation     zlib                           github.com/recastnavigation/recastnavigation
+AMD FidelityFX FSR2  MIT                            github.com/GPUOpen-Effects/FidelityFX-FSR2
+NVIDIA NRD           MIT                            github.com/NVIDIA-RTX/NRD
+NVIDIA RTXDI         NVIDIA RTX SDKs License        github.com/NVIDIA-RTX/RTXDI-Library
+ (RTXDI-Library      (object code only: a package
+  f12037f)           carries no RTXDI source).
+                     This application uses NVIDIA
+                     RTX Dynamic Illumination
+                     (NVIDIA RTXDI).
+NVIDIA SHaRC         NVIDIA RTX SDKs License        github.com/NVIDIA-RTX/SHARC
+ (4e21b58, v1.8.3)   (object code only: a package
+                     carries no SHaRC source).
+                     This software contains source
+                     code provided by NVIDIA
+                     Corporation.
+NVIDIA Streamline    NVIDIA RTX SDKs License /      github.com/NVIDIA-RTX/Streamline
+ (2.14.1) and DLSS   the DLSS and Reflex licenses
+ (310.9.1)           (the SDK's bin/x64/
+                     nvngx_dlss.license.txt and
+                     reflex.license.txt; binaries
+                     only). This application uses
+                     NVIDIA DLSS.
+Tracy Profiler       BSD-3-Clause                   github.com/wolfpld/tracy
+Zstandard (zstd)     BSD-3-Clause                   github.com/facebook/zstd
+ (1.5.7, decoder)    (the pak's compressed entries;
+                     DX12/external/zstd/LICENSE)
+DirectXShaderCompiler
+ (dxcompiler.dll)    LLVM Release License /         github.com/microsoft/DirectXShaderCompiler
+                     University of Illinois NCSA
+nlohmann/json        MIT                            github.com/nlohmann/json
+ONNX Runtime         MIT; its LICENSE and its       github.com/microsoft/onnxruntime
+ (1.31.0,            notices for the third-party
+  onnxruntime*.dll)  code it includes ship beside
+                     the DLLs (from DX12/external/
+                     onnxruntime/):
+                     onnxruntime_LICENSE.txt
+                     onnxruntime_ThirdPartyNotices.txt
+MediaPipe Face       Apache-2.0 (converted to       github.com/google-ai-edge/mediapipe
+ Landmarker models   ONNX; LICENSE and NOTICE.md
+ (face_landmarker    beside them in
+  .task, v1)         engine/models/face/)
+FFmpeg               GPLv3 build: shipped only in   ffmpeg.org
+ (av*/sw* DLLs)      a package that enables the
+                     Media, Video or FaceTracking
+                     module.
+                     *** SEE THE NOTE BELOW ***
+
+============================================================================
+NOTE — FFmpeg (a GPLv3 build: distribution is blocked only for a package
+that enables the Media, Video or FaceTracking module)
+============================================================================
+The FFmpeg DLLs vendored in this repository were built with
+`--enable-gpl --enable-version3` — they are a GPLv3 build. Distributing an
+application dynamically linked against a GPLv3 FFmpeg places the WHOLE
+application under GPLv3 obligations.
+
+Only the Media, Video and FaceTracking engine modules use FFmpeg. A package
+that turns all three off in game.json's "package"."modules" (the default
+game.json does) links none of them and carries no FFmpeg DLL, and this note
+does not restrict its distribution: props/Engine.App.props copies the DLLs only
+while a build links Media or Video, CMake/CPack ships only the
+DLLs the exe imports, and tools/package_audit.py fails a package that
+carries a GPL DLL without a module that needs it.
+
+A package that enables Media, Video or FaceTracking carries the GPLv3 DLLs
+(its audit warns "CARRIES GPL"). Its distribution is BLOCKED until the DLLs
+are replaced with an LGPL-v2.1+ build of FFmpeg (built WITHOUT
+--enable-gpl) and this entry is updated to "FFmpeg — LGPL v2.1+".
+
+The avfilter and avdevice DLLs, which nothing imports, are no longer in the
+repository. This is decision D-1' of docs\reviews\ENGINE_REVIEW_2026-10-25.md
+(its option (b), with the avfilter / avdevice part of (c)); it replaces
+Top-15 #1 of docs\reviews\ENGINE_REVIEW_2026-08.md.
+============================================================================
+
+NOTE ON COMPLETENESS
+This file was assembled 2026-08-14 from the contents of DX12/external/ and
+the DLLs shipped by CMake/CPack. When adding a new third-party
+component, add a row here in the same commit — the packaged build copies
+this file verbatim.

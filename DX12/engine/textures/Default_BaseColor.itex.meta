@@ -1,0 +1,4 @@
+# DX12 Engine asset meta. Commit this file alongside its asset.
+# The guid is this asset's identity — references survive a rename
+# through it. Never edit or copy it by hand.
+guid = ba827e5a75d14f6aaf5544227e61d859

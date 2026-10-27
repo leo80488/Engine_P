@@ -1,0 +1,15 @@
+{
+  "name": "MMDShow",
+  "kind": "script",
+  "summary": "The MMD performance flow: idle, countdown, play through MotionDirector, then idle / replay / next scene",
+  "enabledByDefault": false,
+  "scripts": [
+    "asset/scripts/systems/MMDShowFlow.lua",
+    "asset/scripts/config/MMDShow.lua",
+    "asset/scripts/logic/MMDShowConfig.lua",
+    "asset/scripts/logic/MotionCountdown.lua"
+  ],
+  "scriptNames": [
+    "MMDShowFlow"
+  ]
+}

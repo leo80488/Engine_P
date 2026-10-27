@@ -1,0 +1,33 @@
+{
+  "name": "Video",
+  "kind": "cpp",
+  "summary": "Video playback: VideoComponent decoded on the D3D12 video queue or from a file through FFmpeg, as a screen overlay or world-space quads",
+  "dependsOn": [],
+  "enabledByDefault": true,
+  "engineClass": "VideoModule",
+  "editorClass": "VideoEditorModule",
+  "lib": "Video",
+  "defines": ["WITH_FFMPEG"],
+  "includeDirs": ["external/ffmpeg/include"],
+  "sources": [
+    "src/Video/**",
+    "include/Video/**",
+    "include/ECS/VideoComponent.h",
+    "src/ECS/VideoSystem.cpp",
+    "include/ECS/VideoSystem.h",
+    "src/ECS/VideoHelpers.cpp",
+    "include/ECS/VideoHelpers.h",
+    "src/RenderGraph/RenderPass/VideoPass.cpp",
+    "include/RenderGraph/RenderPass/VideoPass.h",
+    "src/RenderGraph/RenderPass/VideoQuadPass.cpp",
+    "include/RenderGraph/RenderPass/VideoQuadPass.h",
+    "src/Harness/VideoUploadProbe.cpp",
+    "include/Harness/VideoUploadProbe.h",
+    "src/Editor/VideoEditorModule.cpp",
+    "include/Editor/VideoReflection.h"
+  ],
+  "components": ["Video"],
+  "importedDlls": ["avformat-62.dll", "avcodec-62.dll", "avutil-60.dll", "swscale-9.dll"],
+  "runtimeDlls": ["swresample-6.dll"],
+  "dllDirs": ["."]
+}

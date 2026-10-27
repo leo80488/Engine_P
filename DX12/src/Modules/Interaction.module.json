@@ -1,0 +1,8 @@
+{
+  "name": "Interaction",
+  "kind": "script",
+  "summary": "Look at / walk up to an entity tagged Interactable and press E: its OnInteract runs",
+  "enabledByDefault": false,
+  "scripts": ["asset/scripts/systems/InteractionSystem.lua"],
+  "scriptNames": ["InteractionSystem"]
+}

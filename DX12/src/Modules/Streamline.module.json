@@ -1,0 +1,14 @@
+{
+  "name": "Streamline",
+  "kind": "cpp",
+  "summary": "NVIDIA Streamline: DLSS Super Resolution, Ray Reconstruction, Frame Generation and Reflex",
+  "enabledByDefault": true,
+  "engineClass": "StreamlineModule",
+  "lib": "Streamline",
+  "includeDirs": ["external/Streamline/include"],
+  "sources": ["src/Streamline/**"],
+  "importedDlls": ["sl.interposer.dll"],
+  "runtimeDlls": ["sl.*.dll", "nvngx_*.dll", "NvLowLatencyVk.dll"],
+  "dllDirs": ["external/Streamline/bin/x64/Release", "external/Streamline/bin/x64"],
+  "dllsOptional": true
+}

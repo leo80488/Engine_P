@@ -1,0 +1,8 @@
+{
+  "name": "Quest",
+  "kind": "script",
+  "summary": "The demo quest list: gameplay events advance AddQuest / CompleteQuest progress",
+  "enabledByDefault": false,
+  "scripts": ["asset/scripts/systems/QuestSystem.lua"],
+  "scriptNames": ["QuestSystem"]
+}

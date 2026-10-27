@@ -1,0 +1,33 @@
+{
+  "name": "FaceTracking",
+  "kind": "cpp",
+  "summary": "Face sources (camera, video, network apps, replays) driving a character's face and head",
+  "dependsOn": ["Media"],
+  "enabledByDefault": true,
+  "engineClass": "FaceTrackingModule",
+  "editorClass": "FaceTrackingEditorModule",
+  "lib": "FaceTracking",
+  "includeDirs": ["external/onnxruntime/include"],
+  "noPch": ["src/FaceTracking/Sources/UdpReceiver.cpp"],
+  "sources": [
+    "src/FaceTracking/**",
+    "include/FaceTracking/**",
+    "src/ECS/FaceTrackingSystem.cpp",
+    "include/ECS/FaceTrackingSystem.h",
+    "include/ECS/FaceTrackingComponent.h",
+    "src/Editor/FaceTrackingEditorModule.cpp",
+    "src/Editor/FaceTrackingWindow.cpp",
+    "src/Editor/FaceMappingWindow.cpp",
+    "include/Editor/FaceTrackingWindow.h",
+    "include/Editor/FaceMappingWindow.h",
+    "include/Editor/FaceTrackingReflection.h"
+  ],
+  "components": ["FaceTracking"],
+  "assetExts": [".ifacemap", ".iface"],
+  "luaTables": ["FaceTracking"],
+  "importedDlls": ["MFPlat.DLL", "MF.dll", "MFReadWrite.dll", "WS2_32.dll"],
+  "runtimeDlls": ["onnxruntime.dll", "onnxruntime_providers_shared.dll"],
+  "dllDirs": ["external/onnxruntime/bin"],
+  "dllsOptional": true,
+  "contentRoots": ["engine/models/face", "engine/facemaps"]
+}

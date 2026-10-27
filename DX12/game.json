@@ -1,0 +1,39 @@
+{
+  "name": "DX12Engine",
+  "version": "0.1.0",
+  "startup_scene": "engine/world/BaseScene.iscene",
+  "startup_state": "",
+  "scenes": {
+    "BaseScene": {
+      "path": "engine/world/BaseScene.iscene"
+    }
+  },
+  "modules": {
+    "AIActions": false,
+    "Combat": false,
+    "FaceTracking": false,
+    "Interaction": false,
+    "Media": false,
+    "MMDShow": false,
+    "Nav": true,
+    "Quest": false,
+    "Streamline": false,
+    "StreetLightRig": false,
+    "Video": false
+  },
+  "package": {
+    "modules": {
+      "AIActions": false,
+      "Combat": false,
+      "FaceTracking": false,
+      "Interaction": false,
+      "Media": false,
+      "MMDShow": false,
+      "Nav": true,
+      "Quest": false,
+      "Streamline": false,
+      "StreetLightRig": false,
+      "Video": false
+    }
+  }
+}

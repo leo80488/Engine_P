@@ -1,0 +1,237 @@
+{
+  "profiles": {
+    "Demo.Vehicle": {
+      "Brake": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 0,
+        "posX": 83,
+        "posY": 0,
+        "stick": -1,
+        "trigger": 0,
+        "vk1": 0,
+        "vk2": 0
+      },
+      "Controls": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 64,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 112,
+        "vk2": 0
+      },
+      "ExitVehicle": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 8,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 69,
+        "vk2": 0
+      },
+      "Horn": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 32,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 72,
+        "vk2": 0
+      },
+      "Look": {
+        "mouse": true,
+        "negX": 0,
+        "negY": 0,
+        "pad": 0,
+        "posX": 0,
+        "posY": 0,
+        "stick": 1,
+        "trigger": -1,
+        "vk1": 0,
+        "vk2": 0
+      },
+      "Steer": {
+        "mouse": false,
+        "negX": 65,
+        "negY": 0,
+        "pad": 0,
+        "posX": 68,
+        "posY": 0,
+        "stick": 0,
+        "trigger": -1,
+        "vk1": 0,
+        "vk2": 0
+      },
+      "Throttle": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 0,
+        "posX": 87,
+        "posY": 0,
+        "stick": -1,
+        "trigger": 1,
+        "vk1": 0,
+        "vk2": 0
+      }
+    },
+    "Rossi.OnFoot": {
+      "Attack": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 32768,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 1,
+        "vk2": 74
+      },
+      "Controls": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 64,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 112,
+        "vk2": 0
+      },
+      "Dodge": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 2,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 17,
+        "vk2": 0
+      },
+      "Guard": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 16,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 70,
+        "vk2": 0
+      },
+      "Jump": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 1,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 32,
+        "vk2": 0
+      },
+      "LockTarget": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 512,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 9,
+        "vk2": 0
+      },
+      "Look": {
+        "mouse": true,
+        "negX": 0,
+        "negY": 0,
+        "pad": 0,
+        "posX": 0,
+        "posY": 0,
+        "stick": 1,
+        "trigger": -1,
+        "vk1": 0,
+        "vk2": 0
+      },
+      "Move": {
+        "mouse": false,
+        "negX": 65,
+        "negY": 83,
+        "pad": 0,
+        "posX": 68,
+        "posY": 87,
+        "stick": 0,
+        "trigger": -1,
+        "vk1": 0,
+        "vk2": 0
+      },
+      "Restart": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 1024,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 82,
+        "vk2": 0
+      },
+      "Sprint": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 256,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 160,
+        "vk2": 0
+      },
+      "TargetNext": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 8192,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 69,
+        "vk2": 0
+      },
+      "TargetPrevious": {
+        "mouse": false,
+        "negX": 0,
+        "negY": 0,
+        "pad": 4096,
+        "posX": 0,
+        "posY": 0,
+        "stick": -1,
+        "trigger": -1,
+        "vk1": 81,
+        "vk2": 0
+      }
+    }
+  },
+  "version": 1
+}

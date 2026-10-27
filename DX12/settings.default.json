@@ -1,0 +1,27 @@
+{
+  "version": 3,
+  "antialiasing": {
+    "mode": "None"
+  },
+  "display": {
+    "frameRateCap": 60,
+    "windowWidth": 1280,
+    "windowHeight": 720,
+    "fullscreen": false,
+    "hdrMode": "SDR",
+    "frameGen": 0,
+    "reflex": 0
+  },
+  "features": {
+    "ddgi": false,
+    "rtReflections": false,
+    "rtShadows": false,
+    "rtao": false,
+    "ssao": true,
+    "ssr": false,
+    "volumetricFog": false
+  },
+  "postProcess": {
+    "autoExposure": false
+  }
+}

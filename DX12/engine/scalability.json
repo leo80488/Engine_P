@@ -1,0 +1,46 @@
+{
+  "_comment": [
+    "The quality levels' table (render-arch ST3.3 / ST3.4; docs/design/ST3_Scalability_Groups_Plan.md sec.2.2 / 8.2).",
+    "Each group's level is a player setting, scalability.<group> (Low, Medium, High, Ultra, Cinematic);",
+    "these are the player rows it sets and their value at each level, in that order. A level's values",
+    "are the settings store's Scalability layer: the player's own value for a row sits over it.",
+    "Checked at load (Settings/Scalability.h): a player row, in one group, not the lighting tier's",
+    "(renderPath, rtReflections, rtShadows, rtao, ddgi), not LastWrite; five values the row takes as",
+    "they are; High = the row's default. One bad entry refuses the table - the levels then set nothing.",
+    "tests/unit/test_scalability.py checks this file offline."
+  ],
+  "groups": {
+    "shadows": {
+      "shadows.csmResolution": [1024, 2048, 4096, 4096, 4096],
+      "shadows.distance": [100, 200, 400, 600, 800],
+      "shadows.spotMaxResolution": [512, 1024, 2048, 2048, 2048],
+      "shadows.pointResolution": [256, 512, 1024, 1024, 2048]
+    },
+    "gi": {
+      "features.ssgi": [false, false, true, true, true]
+    },
+    "reflections": {
+      "features.ssr": [false, true, true, true, true],
+      "features.transparentReflections": [false, false, true, true, true],
+      "features.rtReflectionsRayTMax": [50, 100, 150, 250, 400]
+    },
+    "post": {
+      "features.ssao": [false, true, true, true, true],
+      "features.aoQuality": ["Low", "Medium", "Scene", "Ultra", "Ultra"],
+      "postProcess.lensFlare": [false, true, true, true, true]
+    },
+    "textures": {
+      "textures.anisotropy": [2, 4, 8, 16, 16]
+    },
+    "effects": {
+      "features.volumetricFog": [false, true, true, true, true]
+    },
+    "viewDistance": {
+      "geometry.lodScale": [2.0, 1.5, 1.0, 0.75, 0.5]
+    },
+    "aa": {
+      "antialiasing.mode": ["DLSS", "DLSS", "TAA", "DLSS", "DLSS"],
+      "antialiasing.fsrRenderScale": ["Performance", "Quality", "Native", "Native", "Native"]
+    }
+  }
+}

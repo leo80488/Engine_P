@@ -1,0 +1,76 @@
+{
+  "perExe": [
+    "src/App.cpp",
+    "src/App_Render.cpp",
+    "src/main.cpp"
+  ],
+  "notCompiledHere": [
+    "src/Modules/Modules.generated.cpp"
+  ],
+  "editorCoreSources": [
+    "src/Reflection/ReflectionEditor.cpp",
+    "src/Reflection/ReflectDrawers.cpp",
+    "src/Resoruce/AnimationImporter.cpp",
+    "src/Resoruce/MaterialImporter.cpp",
+    "src/Resoruce/ModelImportWrite.cpp",
+    "src/Resoruce/ModelMaterialImport.cpp",
+    "src/Resoruce/PmxImporter.cpp",
+    "src/Resoruce/RetargetBaker.cpp",
+    "src/Resoruce/SceneImporter.cpp",
+    "src/Resoruce/ShaderImporter.cpp",
+    "src/Resoruce/SkeletonImporter.cpp",
+    "src/Resoruce/TextureImporter.cpp",
+    "src/Resoruce/UnrealSceneImporter.cpp",
+    "src/Resoruce/VmdImporter.cpp",
+    "src/Resoruce/VrmImporter.cpp"
+  ],
+  "engineCoreInEditorDir": [
+    "src/Editor/DebugDrawSystem.cpp"
+  ],
+  "projects": {
+    "EngineCore": {
+      "extra": [
+        "external/lua/onelua.c",
+        "external/tracy/public/TracyClient.cpp",
+        "external/zstd/lib/common/debug.c",
+        "external/zstd/lib/common/entropy_common.c",
+        "external/zstd/lib/common/error_private.c",
+        "external/zstd/lib/common/fse_decompress.c",
+        "external/zstd/lib/common/xxhash.c",
+        "external/zstd/lib/common/zstd_common.c",
+        "external/zstd/lib/decompress/huf_decompress.c",
+        "external/zstd/lib/decompress/zstd_ddict.c",
+        "external/zstd/lib/decompress/zstd_decompress.c",
+        "external/zstd/lib/decompress/zstd_decompress_block.c"
+      ],
+      "pch": []
+    },
+    "EditorCore": {
+      "extra": [
+        "external/imgui-node-editor/crude_json.cpp",
+        "external/imgui-node-editor/imgui_canvas.cpp",
+        "external/imgui-node-editor/imgui_node_editor.cpp",
+        "external/imgui-node-editor/imgui_node_editor_api.cpp",
+        "external/imgui/imgui.cpp",
+        "external/imgui/imgui_demo.cpp",
+        "external/imgui/imgui_draw.cpp",
+        "external/imgui/imgui_impl_dx12.cpp",
+        "external/imgui/imgui_impl_win32.cpp",
+        "external/imgui/imgui_tables.cpp",
+        "external/imgui/imgui_widgets.cpp",
+        "external/imgui/ImGuizmo/ImGuizmo.cpp",
+        "external/imgui_test_engine/imgui_capture_tool.cpp",
+        "external/imgui_test_engine/imgui_te_context.cpp",
+        "external/imgui_test_engine/imgui_te_coroutine.cpp",
+        "external/imgui_test_engine/imgui_te_engine.cpp",
+        "external/imgui_test_engine/imgui_te_exporters.cpp",
+        "external/imgui_test_engine/imgui_te_perftool.cpp",
+        "external/imgui_test_engine/imgui_te_ui.cpp",
+        "external/imgui_test_engine/imgui_te_utils.cpp",
+        "external/implot/implot.cpp",
+        "external/implot/implot_items.cpp"
+      ],
+      "pch": []
+    }
+  }
+}
