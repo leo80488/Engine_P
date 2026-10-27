@@ -1,53 +1,128 @@
 [English](ARCHITECTURE.md) | **日本語**
 
-# アーキテクチャー
+# Architecture
 
-## ターゲットと所有関係
+## Targets と所有関係
 
-| ターゲット | 責任 |
+```mermaid
+flowchart TD
+    Editor["Editor.exe"] --> EC["EditorCore"]
+    Editor --> Core["EngineCore"]
+    Game["Game.exe"] --> Core
+    Editor --> Modules["Selected EngineModule libraries"]
+    Game --> Modules
+    Core --> Jolt["EngineJolt"]
+    Core --> Deps["EngineDependencies - interface"]
+    Core --> Options["EngineOptions - interface"]
+    EC --> Options
+    Modules --> Options
+```
+
+矢印は CMake の link dependency を表します。EngineOptions と EngineDependencies は INTERFACE target であり、追加の runtime binary ではありません。標準の選択 module は Nav です。Editor が editor-only UI と import code を所有し、Game は EditorCore を link しません。
+
+EngineCore は WITH_EDITOR なしで一度コンパイルします。host ごとの差分には host policy または editor hook を使用します。EditorCore は WITH_EDITOR と editor 用 ImGui 定義でコンパイルします。
+
+main.cpp、App.cpp、App_Render.cpp と生成した module registration unit は、Editor と Game で別々にコンパイルします。App の宣言と module registration が host ごとに異なるため、これらを共有 library にまとめると layout の契約を壊します。各 target は独自の PCH を生成します。
+
+Jolt は同梱 source からビルドします。Jolt header を利用するすべての translation unit と feature 定義を一致させる必要があり、CMake がその定義を伝播します。
+
+## Source selection
+
+configure 時に DX12/tools/cmake_configure.py を実行し、source ownership rule と module descriptor から Sources.cmake および registration code を build tree へ生成します。元の project file を parse してコンパイルしたり、MSBuild で元の solution を呼び出したりする処理ではありません。
+
+src/ 以下に追加した cpp は次回 configure で検出します。module の所有範囲は src/Modules/*.module.json に記述します。src/Editor/ 外の editor helper にも明示的な ownership rule を適用します。
+
+## Frame execution
+
+App は startup、shutdown、外側の loop を所有します。FramePipeline が editor hook を含む frame phase を調整します。ECS system が scene data を更新した後、Renderer が GPU 向けの draw、material、light、visibility data を準備します。
+
+Render Graph は pass と resource dependency を表し、Graphics が DX12 object、command recording と submission を扱います。CPU preparation、graph scheduling、GPU submission は別の責任です。
+
+### Runtime layers
+
+```mermaid
+flowchart TB
+    Hosts["Editor / Game hosts"] --> Pipeline["FramePipeline"]
+    Hosts --> World["World / Scene / ECS"]
+    Scripts["Lua / gameplay / physics / animation"] --> World
+    World --> Prepare["Renderer preparation"]
+    Pipeline --> Prepare
+    Prepare --> Graph["Render Graph"]
+    Graph --> Device["Graphics / DX12 backend"]
+    Resources["ResourceManager / AssetFS"] --> World
+    Resources --> Prepare
+    Hooks["Editor hooks"] -.-> Pipeline
+```
+
+この図は責任の配置を示します。Scene/gameplay state は world-facing 側、pass/resource scheduling は Render Graph、device object と command submission は Graphics に属します。Editor hook により、EngineCore に WITH_EDITOR を持ち込まず authoring 処理を接続します。
+
+### Frame ownership と synchronization
+
+```mermaid
+flowchart TD
+    Main["Main: window / game phases"] --> Packet["FramePacket / snapshots"]
+    Packet --> Lane["RenderOwner lane"]
+    Lane --> Work["Renderer / Render Graph"]
+    Work --> GPU["DX12 queues / GPU"]
+    Lane -. "drain / timing" .-> Main
+    GPU -. "fence constraints" .-> Slots["Frame / upload slots"]
+    Slots -.-> Main
+```
+
+render-owner path の概略であり、すべての system を直列実行する指定ではありません。job と preparation は active frame plan に従って overlap できます。drain は必要な ownership boundary を待ちますが、queue に投入済みの全 GPU work の完了を意味しません。slot の再利用は別途 GPU completion で保護します。
+
+[FramePipeline](../DX12/include/Renderer/FramePipeline.h)、[executor](../DX12/src/Renderer/FramePipeline.cpp)、[App render phases](../DX12/src/App_Render.cpp)を参照してください。world mutation、render snapshot、slot ownership を handoff の適切な側に置きます。
+
+## ECS と lifetime
+
+component pool が storage を提供し、system がアクセスを宣言することで合法な並列 batch を組み立てます。transform hierarchy の伝播と world teardown も契約の一部です。integer index が再利用されていても、cached handle が scene transition を越えて有効になるわけではありません。
+
+## Resource boundaries
+
+| Root | 所有範囲 |
 | --- | --- |
-| EngineCore | Renderer、ECS、資源、Lua と共通システム |
-| EditorCore | エディター、インポーター、ImGui |
-| EngineJolt | 同梱ソースからビルドする物理ライブラリー |
-| EngineModule_* | 選択した追加モジュール |
-| Editor / Game | 各ホストのアプリケーション |
+| DX12/engine/ | defaults、primitive、LUT、editor font |
+| DX12/asset/ | project content。本版では boot/input configuration のみ |
+| DX12/shaders/ | built-in Renderer implementation |
+| DX12/external/ | third-party source と必須 prebuilt payload |
+| DX12/build/ | generated file、compiler output、package |
 
-EngineCore は WITH_EDITOR なしで一度ビルドします。ホスト差分にはポリシーや editor hook を使います。EditorCore は WITH_EDITOR とエディター用 ImGui 定義を使用します。
+runtime handle は loading/lifetime、GUID はファイル移動を越える authored identity を扱います。meta sidecar を保持し、native binary format は engine codec で編集します。
 
-main.cpp、App.cpp、App_Render.cpp、モジュール登録コードは各実行ファイルで別々にコンパイルします。App の条件付きメンバーと登録処理が異なるため、共有ライブラリーにまとめると型／所有関係の契約を壊します。PCH も各ターゲットで生成します。
+## Configuration
 
-## ソース選択
+game.json は identity、scene、startup、runtime module を宣言します。engine.json は developer/render configuration、settings.json は player option、settings.default.json は clean installation/test template です。Editor preference と layout は local state として扱います。
 
-configure 時に tools/cmake_configure.py がソース所有規則と src/Modules/*.module.json を読み、Sources.cmake と登録コードをビルドツリーへ生成します。元の project を MSBuild で呼ぶ処理ではありません。
+CMake は link 対象を選択し、project manifest は runtime で有効にする機能を選択します。optional integration の追加時には両方を合わせます。
 
-src 以下の cpp 追加は次回 configure で検出します。Editor フォルダー外にあるインポーターなどは明示的なルールで分類します。Jolt の feature 定義は利用側と一致させます。
+## Extension points
 
-## フレーム
+- engine 機能は EngineCore、editor window/importer は EditorCore、optional integration は module を通して追加します。
+- Render Graph access を宣言し、CPU/HLSL layout の一致を維持します。
+- ECS access declaration と world lifetime の処理を維持します。
+- project header を PCH に入れないでください。external/C source は engine の C++ PCH を使用しません。
 
-App が起動、終了、外側のループを所有します。FramePipeline が ECS と editor hook を含む各段階を調整し、Renderer が描画、光源、材質、可視性データを準備します。
+[Engine Systems](ENGINE.ja.md)、[Rendering](RENDERING.ja.md)、[Build](BUILD.ja.md)も参照してください。
 
-Render Graph が pass と資源依存を表し、Graphics が DX12 オブジェクト、コマンド記録、送信を担当します。CPU 準備、graph 排程、GPU 実行を区別してください。
+## Source map
 
-## ECS と寿命
-
-component pool とアクセス宣言により安全な並列バッチを構成します。親子 transform の伝播や world 終了も契約の一部です。同じ整数 ID が存在しても、シーン切り替え前の参照を再利用できるとは限りません。
-
-## データ境界
-
-| ルート | 内容 |
+| 領域 | 読み始める場所 |
 | --- | --- |
-| engine | デフォルト資源、基本形状、LUT とフォント |
-| asset | プロジェクト資源。本版は起動／入力設定のみ |
-| shaders | Renderer 内蔵実装 |
-| external | 第三者ソースと必須 payload |
-| build | 生成ファイル、ビルド成果物、package |
+| Application / boot | [main.cpp](../DX12/src/main.cpp)、[App.cpp](../DX12/src/App.cpp) |
+| Frame execution | [FramePipeline.h](../DX12/include/Renderer/FramePipeline.h) |
+| ECS / scheduling | [ECS](../DX12/include/ECS/ECS.h)、[Scheduler](../DX12/include/ECS/Scheduler.h) |
+| Resource loading | [ResourceManager](../DX12/include/Resource/ResourceManager.h)、[AssetFS](../DX12/include/Resource/AssetFS.h) |
+| Rendering graph | [RenderGraph](../DX12/include/RenderGraph/RenderGraph.h) |
+| Native CMake targets | [DX12/CMakeLists.txt](../DX12/CMakeLists.txt) |
 
-runtime handle は読み込み状態と寿命、GUID はファイルの同一性を扱います。移動時は meta を保持し、native binary はエディター／codec で編集します。
+## Feature を追加する場所
 
-## 設定と拡張
+| 変更 | 主な接続箇所 |
+| --- | --- |
+| Component/system | storage、serialization/reflection、scheduler registration、access declaration |
+| Render feature | frame-plan selection、resource declaration、shader binding、lifetime |
+| Asset format | loader/importer、versioned codec、identity、editor integration |
+| Editor tool | EditorCore ownership、undo/redo、world/preview lifetime、host hook |
+| Optional module | descriptor ownership、CMake selection、SDK check、runtime manifest |
 
-game.json が identity、scene、起動、runtime module を指定します。engine.json は開発設定、settings.json は player options、settings.default.json は初期テンプレートです。CMake のリンク選択と runtime manifest の有効設定は両方合わせます。
-
-Render Graph のアクセス、ECS の宣言、CPU/HLSL layout、world 寿命を維持して拡張してください。project header を共通 PCH に入れないでください。
-
-詳細は [Engine](ENGINE.ja.md)、[Rendering](RENDERING.ja.md)、[Build](BUILD.ja.md) を参照してください。
+最小限の関連 extension point から始め、共有動作を変えた場合は両 host で確認します。図は現在の責任分担を示しており、機能ごとに新しい manager を作ることを要求していません。

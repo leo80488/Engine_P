@@ -1,31 +1,45 @@
 [English](CREDITS.md) | **日本語**
 
-# クレジットと参考情報
+# Credits & References
 
-## 第三者ライブラリー
+## Libraries
 
-原作者が権利を保持します。詳細な upstream 一覧は [英語版](CREDITS.md)、license/notices は各 directory と [THIRD_PARTY_NOTICES.txt](../THIRD_PARTY_NOTICES.txt) にあります。
+各 component は原作者の所有権を維持します。license text/notice は該当 payload と [THIRD_PARTY_NOTICES.txt](../THIRD_PARTY_NOTICES.txt) にあります。
 
-| 用途 | 使用ライブラリー |
-| --- | --- |
-| Physics | Jolt |
-| Editor | ImGui、ImGuizmo、ImPlot、node editor、ImGui test engine/club |
-| Script/data | Lua、sol2、nlohmann/json、zstd |
-| Graphics | DirectX headers、DirectXTex、DXC、FidelityFX、NRD/ShaderMake |
-| Import/font | Assimp、FreeType |
-| Geometry/navigation | meshoptimizer、Recast/Detour |
-| Profiling | Tracy |
+| Component | 用途 | Upstream |
+| --- | --- | --- |
+| Jolt | Physics/character simulation | [JoltPhysics](https://github.com/jrouwe/JoltPhysics) |
+| ImGui / ImGuizmo | Editor UI と manipulation | [ImGui](https://github.com/ocornut/imgui), [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) |
+| ImPlot / node editor | plot と graph authoring | [ImPlot](https://github.com/epezent/implot), [node editor](https://github.com/thedmd/imgui-node-editor) |
+| ImGui test engine / club | Editor test と utility | [test engine](https://github.com/ocornut/imgui_test_engine), [imgui_club](https://github.com/ocornut/imgui_club) |
+| Lua / sol2 | Scripting | [Lua](https://www.lua.org/), [sol2](https://github.com/ThePhD/sol2) |
+| DirectXTex / headers | texture 処理と DX12 helper | [DirectXTex](https://github.com/microsoft/DirectXTex), [headers](https://github.com/microsoft/DirectX-Headers) |
+| DXC | HLSL compilation | [DXC](https://github.com/microsoft/DirectXShaderCompiler) |
+| FreeType | Font rasterization | [FreeType](https://freetype.org/) |
+| Assimp | Model import | [Assimp](https://github.com/assimp/assimp) |
+| meshoptimizer | Geometry processing | [meshoptimizer](https://github.com/zeux/meshoptimizer) |
+| Recast / Detour | Navigation | [Recastnavigation](https://github.com/recastnavigation/recastnavigation) |
+| FidelityFX | Upscaling | [GPUOpen](https://gpuopen.com/fidelityfx/) |
+| NRD / ShaderMake | Denoising/shader data | [NRD](https://github.com/NVIDIA-RTX/NRD) |
+| JSON / zstd | data 処理と decompression | [JSON](https://github.com/nlohmann/json), [zstd](https://github.com/facebook/zstd) |
+| Tracy | Profiling | [Tracy](https://github.com/wolfpld/tracy) |
 
-## フォント
+## Fonts
 
-Noto Sans regular/semibold、必要な TC/JP faces、Font Awesome Solid を最小構成として含みます。旧 default filename の内容は Noto Sans Regular です。対応する OFL／license を添付しています。元 project の全 font/environment library は含みません。
+最小構成として Noto Sans regular/semibold、必要な Traditional Chinese/Japanese face、Font Awesome Solid を含みます。runtime の旧 default filename の内容は Noto Sans Regular です。各 font に license text を添付しています。
 
-## 任意 SDK と参考技術
+元 project の font collection 全体と environment library は、本版では再配布していません。
 
-Streamline/DLSS、RTXDI/SHaRC、FFmpeg、ONNX Runtime/face tracking の追加 payload は含まれません。使用する場合は各 SDK の条件を確認してください。
+## Optional integrations
 
-Deferred/clustered shading、cascaded shadow、temporal reconstruction、screen-space/ray-query hybrid、irradiance probe、atmosphere などの技術を利用します。個別の attribution/adaptation は source/shader notice に残しています。
+Streamline/DLSS、RTXDI/SHaRC、FFmpeg、ONNX Runtime/face-tracking integration は独自の SDK/runtime/content を必要とします。optional payload は除外しています。engine 自身の license が vendor の条件を置き換えることはありません。
 
-README のデモ映像は収録しない game content を使ったもので、再配布 asset package ではありません。
+## Techniques と demonstrations
 
-CMake install/CPack は第三者 notices と license を含みます。本作業では engine 独自コードの新しい license を設定していません。
+実装には deferred/clustered shading、cascaded shadow map、temporal reconstruction、screen-space/ray-query hybrid effect、irradiance probe、atmospheric scattering などの手法を使用します。個別の attribution/adaptation は source/shader notice に記載しています。
+
+README の demonstration は repository に含まれない project content を使用しており、再配布可能な sample-asset package ではありません。
+
+## Distribution
+
+CMake install と CPack は notice と選択した library license text を含みます。この source distribution の整理によって engine 独自コードに新しい license を設定していません。

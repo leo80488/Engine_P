@@ -1,4 +1,4 @@
-**English** | [日本語](README.ja.md) | [繁體中文](README.zh-TW.md)
+**English** | [日本語](README.ja.md)
 
 # DX12Engine
 
@@ -73,8 +73,11 @@ Full instructions, options, installation and packaging: [Build](docs/BUILD.md).
 
 ## Documentation
 
+Start with [Getting Started](docs/GETTING_STARTED.md) for the first editor/scene/Game workflow, then use Architecture for ownership and Rendering/Engine Systems for implementation details. Diagrams use Mermaid and render directly on GitHub.
+
 | Document | Contents |
 | --- | --- |
+| [Getting Started](docs/GETTING_STARTED.md) | First launch, scene authoring, registration and Game verification |
 | [Architecture](docs/ARCHITECTURE.md) | Targets, ownership, frame execution and resource boundaries |
 | [Rendering](docs/RENDERING.md) | Pipeline, lighting, materials, effects and pass source index |
 | [Engine Systems](docs/ENGINE.md) | ECS, resources, animation, physics, scripting, UI and editor |

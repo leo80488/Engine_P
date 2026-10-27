@@ -26,6 +26,29 @@ GUIDs and `.meta` sidecars identify authored files; runtime handles track loadin
 
 Native formats have versioned headers/metadata and may contain binary payloads. Use the editor or native codec, not whole-file text replacement. Import pipelines cover textures/models, PMX/VMD, VRM, animation/skeleton data and Unreal scene inputs. Source import capability does not include those assets.
 
+### Resource loading lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> NotLoaded
+    NotLoaded --> Loading: Load
+    Loading --> Ready: Finalize
+    Loading --> Failed: Error
+    Failed --> Loading: Retry
+    Ready --> NotLoaded: Unload
+```
+
+The diagram shows the main load/retry path using `ResourceManager::ResourceState` values; unload during loading/failure also invalidates the handle as described below. A load request returns a handle before readiness. Some resources require deferred GPU finalization; downstream texture/mesh systems can also have their own GPU-readiness state. Check the state needed by the consumer rather than assuming a successful file read makes a draw ready.
+
+| Reference | Validity / responsibility |
+| --- | --- |
+| Asset GUID + `.meta` | Persistent authored identity across file moves |
+| Resource Handle | Slot generation; unload/recycle makes old handles stale |
+| Borrowed `Resource*` | Short-lived query result; do not retain across unload or frames |
+| Entity/world reference | Session/world lifetime; reacquire after scene changes |
+
+See [ResourceManager.h](../DX12/include/Resource/ResourceManager.h). An unload during loading invalidates the slot, so a late worker result cannot populate a new resource that reused it.
+
 ## Content and scenes
 
 `engine/` contains defaults, primitive geometry, a BRDF LUT, starter scene and required fonts. `asset/` is project-owned content. This edition includes only an empty boot manifest and Keys/Pad/InputContexts configuration, so no original gameplay service or scene script boots.

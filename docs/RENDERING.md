@@ -8,6 +8,28 @@ Renderer prepares scene/GPU data, Render Graph organizes pass/resource dependenc
 
 The starter uses SDR and conservative defaults. The areas below describe retained implementation, not validation of every mode on every GPU.
 
+### Feature-level data flow
+
+```mermaid
+flowchart TD
+    Scene["Views / geometry / materials"] --> Visibility["Visibility / deformation"]
+    Visibility --> GBuffer["G-buffer"]
+    GBuffer --> Lighting["Lighting"]
+    Shadows["Shadow resources"] --> Lighting
+    Indirect["Selected GI / reflections"] -.-> Lighting
+    Lighting --> HDR["HDR composition"]
+    Sky["Sky / clouds / volumetrics"] -.-> HDR
+    HDR --> Post["Selected AA / upscaling / post"]
+    Post --> Output["Tone map / output composition"]
+    UI["UI / editor"] --> Output
+```
+
+This groups feature dependencies rather than prescribing a fixed pass order. Optional inputs are dashed. The active frame plan selects the render path and supported features; Render Graph resolves the concrete pass/resource relationships. AA/upscaling choices and capture/output paths can alter the detailed ordering.
+
+### Reading the source
+
+Use [FramePipeline](../DX12/include/Renderer/FramePipeline.h) for frame ownership, the [RenderGraph implementation](../DX12/src/RenderGraph/RenderGraph.cpp) for graph execution and the source index below for pass-specific code. A feature can be present in source without being active in the starter profile.
+
 ## Geometry and visibility
 
 The geometry path uses bindless resources and format-aware vertex data. Preparation covers culling, hierarchy/Hi-Z information, indirect arguments and mesh/meshlet paths. Skinning/morphs add per-frame deformation before consuming passes.
