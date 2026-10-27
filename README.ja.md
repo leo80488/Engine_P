@@ -73,11 +73,10 @@ CMake は EngineCore、EditorCore、選択した module library、Jolt を sourc
 
 ## Documentation
 
-最初の editor/scene/Game workflow は [Getting Started](docs/GETTING_STARTED.ja.md)、ownership は Architecture、実装詳細は Rendering / Engine Systems から読み進められます。
+ownership は Architecture、実装詳細は Rendering / Engine Systems を参照してください。
 
 | Document | 内容 |
 | --- | --- |
-| [Getting Started](docs/GETTING_STARTED.ja.md) | 初回起動、scene authoring、登録、Game verification |
 | [Architecture](docs/ARCHITECTURE.ja.md) | target、ownership、frame execution、resource boundary |
 | [Rendering](docs/RENDERING.ja.md) | pipeline、lighting、material、effect、pass source index |
 | [Engine Systems](docs/ENGINE.ja.md) | ECS、resource、animation、physics、scripting、UI、editor |
